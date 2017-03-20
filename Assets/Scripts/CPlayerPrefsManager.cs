@@ -9,6 +9,13 @@ public class CPlayerPrefsManager : MonoBehaviour
     const string DIFFICULTY_KEY = "difficulty";
     const string LEVEL_KEY = "level_unlocked_";
 
+    public static bool HasAnyPreferences()
+    {
+        return PlayerPrefs.HasKey(MASTER_VOLUME_KEY) ||
+               PlayerPrefs.HasKey(DIFFICULTY_KEY) ||
+               PlayerPrefs.HasKey(LEVEL_KEY);
+    }
+
     public static void SetMasterVolume(float volume)
     {
         if (volume >= 0f && volume <= 1f)

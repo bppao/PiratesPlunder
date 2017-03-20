@@ -15,8 +15,15 @@ public class COptionsController : MonoBehaviour
         m_LevelManager = FindObjectOfType<CLevelManager>();
         m_MusicManager = FindObjectOfType<CMusicManager>();
 
-        VolumeSlider.value = CPlayerPrefsManager.GetMasterVolume();
-        DifficultySlider.value = CPlayerPrefsManager.GetDifficulty();
+        if (CPlayerPrefsManager.HasAnyPreferences())
+        {
+            VolumeSlider.value = CPlayerPrefsManager.GetMasterVolume();
+            DifficultySlider.value = CPlayerPrefsManager.GetDifficulty();
+        }
+        else
+        {
+            SetDefaults();
+        }
     }
 
     private void Update()

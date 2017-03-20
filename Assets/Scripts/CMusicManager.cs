@@ -17,7 +17,11 @@ public class CMusicManager : MonoBehaviour
     private void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
-        m_AudioSource.volume = CPlayerPrefsManager.GetMasterVolume();
+
+        if (CPlayerPrefsManager.HasAnyPreferences())
+        {
+            m_AudioSource.volume = CPlayerPrefsManager.GetMasterVolume();
+        }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -29,9 +33,7 @@ public class CMusicManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene newScene, LoadSceneMode sceneMode)
     {
-        AudioClip loadedSceneClip = LevelMusicChangeArray[newScene.buildIndex];
-
-        Debug.Log("Playing clip: " + loadedSceneClip);
+        AudioClip loadedSceneClip = LevelMusicChangeArray[newScene.buildIndex];        
 
         // Don't play the same clip from the beginning
         if (m_AudioSource.clip != null &&
@@ -43,6 +45,8 @@ public class CMusicManager : MonoBehaviour
             m_AudioSource.loop = true;
             m_AudioSource.Play();
         }
+
+        Debug.Log("Playing clip: " + loadedSceneClip);
     }
 
     public void SetVolume(float newVolume)
